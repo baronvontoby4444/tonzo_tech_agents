@@ -1,4 +1,4 @@
-import { fetchProviderCatalog, type ModelInfo, type ProviderCatalog } from '@n8n/agents';
+import { fetchProviderCatalog, type ModelInfo, type ProviderCatalog } from '@n8n/agents/catalog';
 
 const MODEL_RECOMMENDATION_FETCH_TIMEOUT_MS = 5000;
 const MAX_RECOMMENDED_MODELS_PER_PROVIDER = 3;
@@ -73,7 +73,7 @@ export function buildModelRecommendationsSection(catalog: ProviderCatalog): stri
 	if (rows.length === 0) return null;
 
 	return `\
-## Recommended LLM models
+### Recommended LLM Models
 
 These recommendations are derived from the live models.dev catalog exposed by the agents SDK.
 The provider lists are selected by newest release_date first, limited to
@@ -82,10 +82,11 @@ tool-capable.
 Treat this list as authoritative for model recommendations. Use these models
 when the user does not know what model to pick. Prefer a recommended model for
 a provider the user has credentials for; then call resolve_llm with that
-provider and model, or ask_llm if the user needs to choose a credential.
+provider and model, or ask via ask_questions if the user needs to choose a
+credential.
 Do not mention models outside this list unless the user explicitly names one
 and resolve_llm validates it. Do not write a model or credential directly
-without a resolve_llm or ask_llm result.
+without a resolve_llm result.
 
 ${rows.join('\n')}`;
 }
